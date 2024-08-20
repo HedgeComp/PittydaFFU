@@ -104,7 +104,7 @@ reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v '
 
 #Disabling Edge Desktop SHortcut Creation on Update
 Write-Host "Disabling Edge Shortcut Creation" -ForegroundColor Yellow
-Remove-Item "C:\Users\Public\Desktop\Microsoft Edge.lnk" -Force
+if (Test-Path "C:\Users\Public\Desktop\Microsoft Edge.lnk") { Remove-Item "C:\Users\Public\Desktop\Microsoft Edge.lnk" -Force }
 reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\EdgeUpdate" /v "CreateDesktopShortcutDefault" /t REG_DWORD /d 0 /f /reg:64 | Out-Null
 
 #Disabling  Network Flyout for new networks found.

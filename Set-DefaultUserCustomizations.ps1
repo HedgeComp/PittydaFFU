@@ -99,7 +99,7 @@ reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Hide
 #reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Search" /v 'SearchBoxTaskbarMode' /t REG_DWORD /d 1 /f
 ##Remove Searchbar for all users new Way as of Win 11 23h2 thanks to SweJorgen and Woody over on GetRUbix Discord for pointing me to this.
 Write-Host "Disabling Serachbar" -ForegroundColor Yellow
-reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\RunOnce" /f Out-Null
+reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\RunOnce" /f | Out-Null
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v 'RemoveSearch' /t REG_SZ /d "reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Search /t REG_DWORD /v SearchboxTaskbarMode /d 1 /f" /f | Out-Null
 
 #Disabling Edge Desktop SHortcut Creation on Update

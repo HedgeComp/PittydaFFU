@@ -23,7 +23,7 @@ Function CheckPath {
     # Check if the registry path exists
     if (-not (Test-Path $keypath)) {
         # Create the registry path if it doesn't exist
-        New-Item -Path $keypath -Force
+        New-Item -Path $keypath -Force | out-Null
         Write-Output "The registry path $keypath was created."
     }
 }

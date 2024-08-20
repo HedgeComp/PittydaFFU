@@ -16,7 +16,7 @@ Note: Always use 'd:\' as the root drive letter as it is teh ISO thats mounted d
 #>
 
 
-<#Function Checks for the existence of the registery Path and while create if doesn't exisit#>
+<#Function Checks for the existence of the registery Path and will create if doesn't exisit#>
 Function CheckPath {
     param ($keypath)
     

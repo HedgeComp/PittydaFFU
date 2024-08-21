@@ -102,7 +102,7 @@ reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Hide
 Write-Host "Setting Searchbar Icon and Remvoing Widget" -ForegroundColor Yellow
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\RunOnce" /f | Out-Null
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v 'RemoveSearch' /t REG_SZ /d "reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Search /t REG_DWORD /v SearchboxTaskbarMode /d 1 /f" /f | Out-Null
-reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v 'RemoveWidget' /t REG_SZ /d "reg add HKCU\Software\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v TaskbarDa /t REG_DWORD /d 0 /f" /f
+reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v 'RemoveWidget' /t REG_SZ /d "reg add HKCU\Software\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v TaskbarDa /t REG_DWORD /d 0 /f" /f | Out-Null
 
 #Disabling Edge Desktop SHortcut Creation on Update
 Write-Host "Disabling Edge Shortcut Creation" -ForegroundColor Yellow

@@ -57,10 +57,11 @@ Write-Host  "Stop Start menu from opening on first logon" -ForegroundColor Yello
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v StartShownOnUpgrade /t REG_DWORD /d 1 /f |Out-Null
 
 #Remove Widgets
-Write-Host "Disabling Widgets" -ForegroundColor Yellow
+Write-Host "Disabling Widgets and Task Buttons" -ForegroundColor Yellow
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarDa" /t REG_DWORD /d 0 /f
-Write-Host "Disabling Chat Icon" -ForegroundColor Yellow
+#Write-Host "Disabling Chat Icon" -ForegroundColor Yellow
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarMn" /t REG_DWORD /d 0 /f
+reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ShowTaskViewButton" /t RED_DWORD /d 0 /f
 
 #Remove Bing from Start Menu
 Write-Host "Disabling bing in Start Menu:" -ForegroundColor Yellow
@@ -98,9 +99,10 @@ reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Hide
 #Show Search Icon only , Old Way not longer Works
 #reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Search" /v 'SearchBoxTaskbarMode' /t REG_DWORD /d 1 /f
 ##Remove Searchbar for all users new Way as of Win 11 23h2 thanks to SweJorgen and Woody over on GetRUbix Discord for pointing me to this.
-Write-Host "Disabling Serachbar" -ForegroundColor Yellow
+Write-Host "Setting Searchbar Icon and Remvoing Widget" -ForegroundColor Yellow
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\RunOnce" /f | Out-Null
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v 'RemoveSearch' /t REG_SZ /d "reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Search /t REG_DWORD /v SearchboxTaskbarMode /d 1 /f" /f | Out-Null
+
 
 #Disabling Edge Desktop SHortcut Creation on Update
 Write-Host "Disabling Edge Shortcut Creation" -ForegroundColor Yellow

@@ -34,9 +34,9 @@ $regPath = "HKLM:\Software\Policies\Microsoft\Windows\CloudContent"
 # Disabling Cloud App content from returning or reinstalling
 Write-Host "Disabling Cloud Consumer Content" -ForegroundColor Yellow
 CheckPath -keypath $regpath
-Set-ItemProperty -Path $regPath -Name "DisableConsumerAccountStateContent" -Value 1 -Type DWord
-Set-ItemProperty -Path $regPath -Name "DisableCloudOptimizedContent" -Value 1 -Type DWord
-Set-ItemProperty -Path $regPath -Name "DisableWindowsConsumerFeatures" -Value 0 -Type DWORD
+Set-ItemProperty -Path $regPath -Name "DisableConsumerAccountStateContent" -Value 1
+Set-ItemProperty -Path $regPath -Name "DisableCloudOptimizedContent" -Value 1
+Set-ItemProperty -Path $regPath -Name "DisableWindowsConsumerFeatures" -Value 0
 
 #Disable the remote Windows Store Push intstall
 Write-Host "Disable Remote Push to Install MS Store" -ForegroundColor Yellow

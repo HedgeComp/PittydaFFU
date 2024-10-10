@@ -88,8 +88,7 @@ reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDelive
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v 'SystemPaneSuggestionsEnabled' /t REG_DWORD /d 0 /f  | Out-Null
 
 reg.exe delete "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\Subscriptions" /f  | Out-Null
-Write-Host "up or down?"
-reg.exe delete "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /f  | Out-Null
+#reg.exe delete "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /f  | Out-Null Doesnt appear to exisit any longer
 
 #Hide "Learn more about this picture" from the desktop
 Write-Host "Disabling about this picture" -ForegroundColor Yellow

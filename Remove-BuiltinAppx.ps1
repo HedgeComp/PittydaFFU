@@ -33,6 +33,14 @@ $AppsList = @(
 'Microsoft.GetHelp',
 'Microsoft.GamingApp',
 'Microsoft.PowerAutomateDesktop',
+'Microsoft.Todos',
+'Microsoft.YourPhone',
+'Microsoft.Whiteboard',
+'Microsoft.MicrosoftStickyNotes',
+'Microsoft.MicrosoftJournal',
+'Microsoft.MixedReality.Portal',
+'MicrosoftCorporationII.MicrosoftFamily',
+'Microsoft.549981C3F5F10',
 'Microsoft.Windows.DevHome'
 )
 

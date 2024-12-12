@@ -1,5 +1,11 @@
-#
-#
+# This script attempts to find the keys that contain a REG_SZ named ProviderID under the Microsoft Enrollments Registry Path
+# It does the following:
+# 1. Checks for the Enrollment Path
+# 2. Searches all Subkeys for 'ProviderID'
+# 3. Displays the names of all Subkeys and the Value of ProviderID
+
+
+
 # Define the base registry path
 $basePath = "HKLM:\Software\Microsoft\Enrollments"
 

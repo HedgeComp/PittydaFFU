@@ -1,3 +1,4 @@
+#Add Microsoft Apps you want to remove before Sysprep
 $AppsList = @(
 'Microsoft.3DBuilder',
 'Microsoft.BingFinance',
@@ -25,17 +26,26 @@ $AppsList = @(
 'Microsoft.XboxGameOverlay',
 'Microsoft.Windows.Cortana',
 'Microsoft.XboxSpeechToTextOverlay',
-'Microsoft.OutlookForWindows'
 'MSTEAMS',
 'Microsoft.Xbox.TCUI',
 'Microsoft.OutlookForWindows',
 'MicrosoftCorporationII.QuickAssist',
 'Microsoft.GetHelp',
 'Microsoft.GamingApp',
-'Microsoft.PowerAutomateDesktop'
+'Microsoft.PowerAutomateDesktop',
+'Microsoft.Todos',
+'Microsoft.YourPhone',
+'Microsoft.Whiteboard',
+'Microsoft.MicrosoftStickyNotes',
+'Microsoft.MicrosoftJournal',
+'Microsoft.MixedReality.Portal',
+'MicrosoftCorporationII.MicrosoftFamily',
+'Microsoft.549981C3F5F10',
+'Microsoft.Windows.DevHome'
 )
 
 
+#will remove each app from both the current logged in account and the provisioned package for
 ForEach ($App in $AppsList){
 $PackageFullName = (Get-AppxPackage $App).PackageFullName
 $ProPackageFullName = (Get-AppxProvisionedPackage -online | Where-Object {$_.Displayname -eq $App}).PackageName
@@ -57,6 +67,6 @@ else{
 Write-Host "Unable to find provisioned package: $App" -ForegroundColor DarkMagenta
 }
 }
-#uncomment below to debug the appx removal list.
+Get-AppxPackage -Name *AdobeNotificationClient* -Allusers | Remove-AppxPackage -Allusers
 #$inputChoice = Read-Host "Waiting for a key press so I can check the Appx Removal above"
-
+#Start-Sleep -s 5

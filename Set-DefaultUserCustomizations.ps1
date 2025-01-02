@@ -60,6 +60,10 @@ reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Adva
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarMn" /t REG_DWORD /d 0 /f
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ShowTaskViewButton" /t REG_DWORD /d 0 /f
 
+#disable Tips , Recommendations for new Apps
+reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "Start_IrisRecommendations" /t REG_DWORD /d 0 /f
+
+
 #Remove Bing from Start Menu
 Write-Host "Disabling bing in Start Menu:" -ForegroundColor Yellow
 reg.exe add "HKU\Default\Software\Policies\Microsoft\Windows\Explorer" /f |Out-Null

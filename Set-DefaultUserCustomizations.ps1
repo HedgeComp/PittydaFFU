@@ -81,7 +81,9 @@ reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDelive
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v 'PreInstalledAppsEverEnabled' /t REG_DWORD /d 0 /f  | Out-Null
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v 'SilentInstalledAppsEnabled' /t REG_DWORD /d 0 /f  | Out-Null
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v 'SoftLandingEnabled' /t REG_DWORD /d 0 /f | Out-Null
+reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v 'RotatingLockScreenOverlayEnabled' /t REG_DWORD /d 0 /f | Out-Null
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v 'SubscribedContentEnabled' /t REG_DWORD /d 0 /f  | Out-Null
+reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v 'SubscribedContent-338387Enabled' /t REG_DWORD /d 0 /f  | Out-Null
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v 'SubscribedContent-310093Enabled' /t REG_DWORD /d 0 /f  | Out-Null
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v 'SubscribedContent-338388Enabled' /t REG_DWORD /d 0 /f  | Out-Null
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v 'SubscribedContent-338389Enabled' /t REG_DWORD /d 0 /f  | Out-Null

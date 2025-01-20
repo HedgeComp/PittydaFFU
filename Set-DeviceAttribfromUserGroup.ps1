@@ -1,3 +1,6 @@
+## Version 1.1
+## Create by Scott McDonnell, Centennial IT Inc.
+
 ###############################################################################
 # 1) Install and Import Microsoft Graph PowerShell Modules
 ###############################################################################

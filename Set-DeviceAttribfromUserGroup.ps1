@@ -106,6 +106,7 @@ foreach ($member in $userMembers) {
             }
 
             # Prepare the extension attributes
+            ## you can edit or add additional extensionAttribute numbers here in the JSON
             $Attributes = @{
                 "ExtensionAttributes" = @{
                     "extensionAttribute1" = $ExtensionValue
@@ -113,10 +114,9 @@ foreach ($member in $userMembers) {
             } | ConvertTo-Json
 
             Write-Host "   Updating AAD device ID '$azureADDeviceId' with extensionAttribute1=$ExtensionValue..."
+           
             # Make sure the device object is real in AAD
-            #$aadDeviceId = $device.azureADDeviceId
-
-            #$entraObjectID = (Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/beta/devices?`$filter=deviceId eq '$($azureADDeviceId)'").value.id
+                      
             $entraObjectID = (Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/beta/devices?`$filter=deviceId eq '$($azureADDeviceId)'").value
 
             $currentExtValue = $entraObjectID.extensionAttributes.extensionAttribute1

@@ -29,18 +29,18 @@ Connect-MgGraph -Scopes "Group.Read.All","Device.ReadWrite.All","DeviceManagemen
 # 3) Define Variables
 ###############################################################################
 # CHANGE THIS to the display name (or any other criteria) of the Security Group 
-# whose user membership drives your device attribute logic.
+# whose user membership drives the adding to device attribute1 logic.
 $TargetGroupName = "FortiClient_EntraID"
 
 # CHANGE THIS to the value you want to store in extensionAttribute1
-# This will be used in the dynamic device group rule: device.extensionAttribute1 -eq "<Value>"
+# This will be used in an Entra dynamic device group rule: device.extensionAttribute1 -eq "<Value>"
 $ExtensionValue = "FortiClientVPN_Required"
 
 ###############################################################################
 # 4) Get the Target Group
 ###############################################################################
 Write-Host "Retrieving group '$TargetGroupName' ..."
-#$targetGroups = Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/beta/groups/?`$filter=dispalyName eq '$($TargetGroupName)'"
+
 
 $targetGroups = Get-MgGroup -Filter "displayName eq '$TargetGroupName'" -All
 $targetGroup = $targetGroups | Select-Object -First 1
@@ -59,7 +59,6 @@ Write-Host "Retrieving members of group '$($targetGroup.DisplayName)' ..."
 $groupMembers = Get-MgGroupMember -GroupId $targetGroup.Id -All
 
 # Filter out only user objects (in case the group contains service principals/devices/etc.)
-#$userMembers = $groupMembers | Where-Object { $_.'[@odata.type]' -eq '#microsoft.graph.user' }
 
 $userMembers = $groupMembers | Where-Object {
     $_.AdditionalProperties['@odata.type'] -eq '#microsoft.graph.user'
@@ -99,28 +98,27 @@ foreach ($member in $userMembers) {
         if (($device.ManagementAgent -eq 'mdm') -and ($device.ManagedDeviceOwnerType -eq 'company')) {
 
             # Confirm this property references the Azure AD device objectId
-            $azureADDeviceId = $device.azureADDeviceId  # If this property is available
-            if (!$azureADDeviceId) {
+            $intuneAadID = $device.azureADDeviceId  # If this property is available
+            if (!$intuneAadID) {
                 Write-Warning "   - No azureADDeviceId found; using $($device.Id) as fallback."
-                $azureADDeviceId = $device.Id
+                $intuneAadID = $device.Id
             }
 
             # Prepare the extension attributes
-            ## you can edit or add additional extensionAttribute numbers here in the JSON
             $Attributes = @{
                 "ExtensionAttributes" = @{
                     "extensionAttribute1" = $ExtensionValue
                 }
             } | ConvertTo-Json
 
-            Write-Host "   Updating AAD device ID '$azureADDeviceId' with extensionAttribute1=$ExtensionValue..."
-           
-            # Make sure the device object is real in AAD
-                      
-            $entraObjectID = (Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/beta/devices?`$filter=deviceId eq '$($azureADDeviceId)'").value
+            Write-Host "   Updating AAD device ID '$intuneAadID' with extensionAttribute1=`"$ExtensionValue`"..."
+            
+            #the orgianal below returns the single value for .id of the Entra Object. We now want to check other properties so change to the full .value
+            #$entraObjectID = (Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/beta/devices?`$filter=deviceId eq '$($intuneAadID)'").value.id
+            $entraObjectID = (Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/beta/devices?`$filter=deviceId eq '$($intuneAadID)'").value
 
             $currentExtValue = $entraObjectID.extensionAttributes.extensionAttribute1
-            Write-Host "Current Value of Ext1 is $currentExtValue"
+            Write-Host "Current Value of extensionAttribute1 is $currentExtValue"
 
 
             try {
@@ -130,12 +128,12 @@ foreach ($member in $userMembers) {
                 Write-Host "   - Successfully updated extensionAttribute1 for '$($device.DeviceName)'." -ForegroundColor Green
                 }
                 else {
-                Write-Host " Not updating $($device.DeviceName) extensionAttribute1 alredy set." -ForegroundColor Yellow
+                Write-Host "Not updating $($device.DeviceName) extensionAttribute1 alredy set." -ForegroundColor Yellow
                 }
             }
             
             catch {
-                Write-Warning "   - Failed to update device '$($device.DeviceName)' (AAD ID: $azureADDeviceId): $_"
+                Write-Warning "   - Failed to update device '$($device.DeviceName)' (AAD ID: $intuneAadID): $_"
             }
         }
         else {
@@ -146,7 +144,7 @@ foreach ($member in $userMembers) {
 
 
 ###############################################################################
-# 7) (Optional) Clear the Attribute on Devices Whose Primary User is No Longer in the Group
+# 7) (Next Steps create a new Script or add a new section to undo the above.) Clear the Attribute on Devices Whose Primary User is No Longer in the Group
 ###############################################################################
 # If you'd like to ensure that devices get removed when the user is no longer in the group,
 # you'd do a second pass here. For example:
@@ -157,7 +155,7 @@ foreach ($member in $userMembers) {
 #
 # This step is left out for brevity but is recommended to maintain accurate membership.
 
-Write-Host "`nAll done! The devices where primary users are in '$TargetGroupName' should now have extensionAttribute1 set to '$ExtensionValue'."
-Write-Host "You can now create or update a dynamic device group with the rule:"
-Write-Host "    device.extensionAttribute1 -eq `"$ExtensionValue`""
-
+Write-Host "`nWe're all done ya'll! ` `nThe Intune Devices where primary users are in the Entra User Group '$TargetGroupName' should now have extensionAttribute1 set to '$ExtensionValue'."
+Write-Host "You can now create or update a Device Group Dynamic membership with the following rule syntax:"
+Write-Host "`n   (device.extensionAttribute1 -eq `"$ExtensionValue`")"
+Write-Host "`n" ` "`n" ` "Good-Luck!"

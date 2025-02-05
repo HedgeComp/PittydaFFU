@@ -8,7 +8,6 @@ $AppsList = @(
 'Microsoft.MicrosoftSolitaireCollection',
 'Microsoft.People',
 'Microsoft.Windows.Photos',
-'Microsoft.WindowsCamera',
 'microsoft.windowscommunicationsapps',
 'Microsoft.WindowsPhone',
 'Microsoft.WindowsSoundRecorder',

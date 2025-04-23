@@ -107,11 +107,11 @@ reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Adva
 Write-Host "[Default User] Set Left Start Menu Alignment" -ForegroundColor Yellow
 reg.exe add "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarAl /t REG_DWORD /d 0 /f | Out-Null
 
-# STEP 11: Configure Explorer Policies (Bing Suggestions, Run As)
+# STEP 11: Configure Explorer RunAs OtherUser)
 Write-Host "[Default User] Disabling Bing suggestions & enabling 'Run as different user'" -ForegroundColor Yellow
 reg.exe add "HKU\Default\Software\Policies\Microsoft\Windows\Explorer" /f | Out-Null # Ensure path exists
 reg.exe add "HKU\Default\Software\Policies\Microsoft\Windows\Explorer" /v ShowRunAsDifferentUserInStart /t REG_DWORD /d 1 /f | Out-Null
-reg.exe add "HKU\Default\Software\Policies\Microsoft\Windows\Explorer" /v DisableSearchBoxSuggestions /t REG_DWORD /d 1 /f | Out-Null
+#reg.exe add "HKU\Default\Software\Policies\Microsoft\Windows\Explorer" /v DisableSearchBoxSuggestions /t REG_DWORD /d 1 /f | Out-Null
 
 # STEP 12: Disable Windows Spotlight Collection on Desktop
 Write-Host "[Default User] Disabling Windows Spotlight Collection on Desktop via Policy" -ForegroundColor Yellow

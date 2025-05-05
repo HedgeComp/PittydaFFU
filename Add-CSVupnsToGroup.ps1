@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Bulk-add users (by UPN) to the Azure AD group "azCorporate iPhones" via MS Graph SDK.
+  Bulk-add users (by UPN) to the Azure AD group  via MS Graph SDK.
 
 .DESCRIPTION
   - Reads a CSV with header: UserPrincipalName
@@ -15,13 +15,15 @@
   Path to the CSV file with a column named UserPrincipalName.
 
 .EXAMPLE
-  .\Add-ToAzCorporateIPhones.ps1 -CsvPath .\users.csv
+  .\Add-ToAzCorporateIPhones.ps1 -CsvPath .\users.csv -grouName "My CoolGroup"
 #>
 
 [CmdletBinding()]
 param(
     [Parameter(Mandatory=$true)]
     [string]$CsvPath
+    [Parameter(Mandatory=$true)]
+    [string]$groupName
 )
 
 # 1. Ensure Graph modules are available
@@ -39,7 +41,9 @@ Connect-MgGraph -Scopes @(
 )
 
 # 3. Resolve the target group
-$groupName = "azCorporate iPhones"
+#### Add your Groupname Here
+#$groupName = "azCorporate"
+
 Write-Host "Locating group '$groupName'…" -NoNewline
 $group = Get-MgGroup -Filter "displayName eq '$groupName'" -Select Id -ErrorAction Stop
 

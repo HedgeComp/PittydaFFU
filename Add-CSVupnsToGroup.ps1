@@ -15,7 +15,7 @@
   Path to the CSV file with a column named UserPrincipalName.
 
 .EXAMPLE
-  .\Add-ToAzCorporateIPhones.ps1 -CsvPath .\users.csv -grouName "My CoolGroup"
+  .\Add-CSVupnsToGroup.ps1 -CsvPath .\users.csv -grouName "My CoolGroup"
 #>
 
 [CmdletBinding()]

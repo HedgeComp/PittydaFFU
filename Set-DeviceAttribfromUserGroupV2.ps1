@@ -1,4 +1,4 @@
-<# This script will take the members of a User Group (defined by $TargetGroupName) and Search for Entra Devices where the member is assigned as the Primary User.
+<# This script will take the members of a User Group (defined by $sourceGroupName) and Search for Entra Devices where the member is assigned as the Primary User.
 Once the Device Objects are found, it will then check for a Customm Extension value in device.extensionAttribute1 property.
 If the Device is Corporate owned and in MDM (intune) it will set the custom attribute value to a specified value( $ExtensionValue) if not set.
 if the Value is already defined then it will skip. A Device Group can now be created and use a Dynamic Membership device.extensionAttribute1 -eq `"$ExtensionValue`"
@@ -6,6 +6,8 @@ if the Value is already defined then it will skip. A Device Group can now be cre
 Use Case:  Users in a a group who are allowed to sign tino VPN via SAML. USers require the VPN on their devices. Once they are in the Allowed VPN group, you can run the script `
 and automaticcly add their devices to a Group in Entra that can be used in Intune to deploy the VPN software to a Device Group for the required VPN software.
 
+
+For Dorken Users in FortiClient_EntraID use SAML login and then their devices will be found and assigned the VPN extension attribute.Intune will then deploy the FortiClient
  #>
 
 ###############################################################################
@@ -41,33 +43,33 @@ Connect-MgGraph -Scopes "Group.Read.All","Device.ReadWrite.All","DeviceManagemen
 ###############################################################################
 # CHANGE THIS to the display name (or any other criteria) of the Security Group 
 # whose user membership drives the adding to device attribute1 logic.
-$TargetGroupName = "VendorClient_EntraID"
+$sourceGroupName = "MyUsergour_EntraIDName"
 
 # CHANGE THIS to the value you want to store in extensionAttribute1
 # This will be used in an Entra dynamic device group rule: device.extensionAttribute1 -eq "<Value>"
-$ExtensionValue = "VendorClientVPN_Required"
+$ExtensionValue = "MyRequiredAttributeValueHere.."
 
 ###############################################################################
-# 4) Get the Target Group
+# 4) Get the source Group
 ###############################################################################
-Write-Host "Retrieving group '$TargetGroupName' ..."
+Write-Host "Retrieving group '$sourceGroupName' ..."
 
 
-$targetGroups = Get-MgGroup -Filter "displayName eq '$TargetGroupName'" -All
-$targetGroup = $targetGroups | Select-Object -First 1
+$sourceGroups = Get-MgGroup -Filter "displayName eq '$sourceGroupName'" -All
+$sourceGroup = $sourceGroups | Select-Object -First 1
 
-if (-not $targetGroup) {
-    Write-Host "ERROR: Group '$TargetGroupName' not found. Exiting."
+if (-not $sourceGroup) {
+    Write-Host "ERROR: Group '$sourceGroupName' not found. Exiting."
     return
 }
 
-Write-Host "Found group: $($targetGroup.DisplayName) (ObjectId: $($targetGroup.Id))"
+Write-Host "Found group: $($sourceGroup.DisplayName) (ObjectId: $($sourceGroup.Id))"
 
 ###############################################################################
 # 5) Retrieve Group Members (Users)
 ###############################################################################
-Write-Host "Retrieving members of group '$($targetGroup.DisplayName)' ..."
-$groupMembers = Get-MgGroupMember -GroupId $targetGroup.Id -All
+Write-Host "Retrieving members of group '$($sourceGroup.DisplayName)' ..."
+$groupMembers = Get-MgGroupMember -GroupId $sourceGroup.Id -All
 
 # Filter out only user objects (in case the group contains service principals/devices/etc.)
 
@@ -84,7 +86,7 @@ if (-not $userMembers) {
 Write-Host "Found $($userMembers.Count) user(s) in the group."
 
 ###############################################################################
-# 6) For Each User, Find Their Owned Devices & Update Extension Attribute
+# 6) For Each User, Find Their Corporate Owned Devices & Update Extension Attribute
 ###############################################################################
 foreach ($member in $userMembers) {
     Write-Host "`nChecking devices for user: $($member.AdditionalProperties.displayName) ($($member.UserPrincipalName)) ..."
@@ -161,7 +163,7 @@ catch {
     }
 }
 
-Write-Host "`nWe're all done ya'll! ` `nThe Intune Devices where primary users are in the Entra User Group '$TargetGroupName' should now have extensionAttribute1 set to '$ExtensionValue'."
+Write-Host "`nWe're all done ya'll! ` `nThe Intune Devices where primary users are in the Entra User Group '$sourceGroupName' should now have extensionAttribute1 set to '$ExtensionValue'."
 Write-Host "You can now create or update a Device Group Dynamic membership with the following rule syntax:"
 Write-Host "`n   (device.extensionAttribute1 -eq `"$ExtensionValue`")"
 Write-Host "`n" ` "`n" ` "Good-Luck!"

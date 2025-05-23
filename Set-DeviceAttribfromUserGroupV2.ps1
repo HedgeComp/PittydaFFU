@@ -1,3 +1,13 @@
+<# This script will take the members of a User Group (defined by $TargetGroupName) and Search for Entra Devices where the member is assigned as the Primary User.
+Once the Device Objects are found, it will then check for a Customm Extension value in device.extensionAttribute1 property.
+If the Device is Corporate owned and in MDM (intune) it will set the custom attribute value to a specified value( $ExtensionValue) if not set.
+if the Value is already defined then it will skip. A Device Group can now be created and use a Dynamic Membership device.extensionAttribute1 -eq `"$ExtensionValue`"
+
+Use Case:  Users in a a group who are allowed to sign tino VPN via SAML. USers require the VPN on their devices. Once they are in the Allowed VPN group, you can run the script `
+and automaticcly add their devices to a Group in Entra that can be used in Intune to deploy the VPN software to a Device Group for the required VPN software.
+
+ #>
+
 ###############################################################################
 # 1) Install and Import Microsoft Graph PowerShell Modules
 ###############################################################################
@@ -31,11 +41,11 @@ Connect-MgGraph -Scopes "Group.Read.All","Device.ReadWrite.All","DeviceManagemen
 ###############################################################################
 # CHANGE THIS to the display name (or any other criteria) of the Security Group 
 # whose user membership drives the adding to device attribute1 logic.
-$TargetGroupName = "FortiClient_EntraID"
+$TargetGroupName = "VendorClient_EntraID"
 
 # CHANGE THIS to the value you want to store in extensionAttribute1
 # This will be used in an Entra dynamic device group rule: device.extensionAttribute1 -eq "<Value>"
-$ExtensionValue = "FortiClientVPN_Required"
+$ExtensionValue = "VendorClientVPN_Required"
 
 ###############################################################################
 # 4) Get the Target Group
@@ -123,7 +133,7 @@ catch {
             Write-Host "   Updating AAD device ID '$intuneAadID' with extensionAttribute1=`"$ExtensionValue`"..."
             
             #the orgianal below returns the single value for .id of the Entra Object. We now want to check other properties so change to the full .value
-            #$entraObjectID = (Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/beta/devices?`$filter=deviceId eq '$($intuneAadID)'").value.id
+            #you can switch back the graph call to V1.0 if you want, juse a preference for /beta
             $entraObjectID = (Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/beta/devices?`$filter=deviceId eq '$($intuneAadID)'").value
 
             $currentExtValue = $entraObjectID.extensionAttributes.extensionAttribute1
@@ -150,19 +160,6 @@ catch {
         }
     }
 }
-
-
-###############################################################################
-# 7) (Next Steps create a new Script or add a new section to undo the above.) Clear the Attribute on Devices Whose Primary User is No Longer in the Group
-###############################################################################
-# If you'd like to ensure that devices get removed when the user is no longer in the group,
-# you'd do a second pass here. For example:
-#
-#   1. Get all devices that currently have extensionAttribute1 = "SecGroupPrimaryUser"
-#   2. For each such device, check if the primary owner is still in the group
-#   3. If not, clear extensionAttribute1
-#
-# This step is left out for brevity but is recommended to maintain accurate membership.
 
 Write-Host "`nWe're all done ya'll! ` `nThe Intune Devices where primary users are in the Entra User Group '$TargetGroupName' should now have extensionAttribute1 set to '$ExtensionValue'."
 Write-Host "You can now create or update a Device Group Dynamic membership with the following rule syntax:"

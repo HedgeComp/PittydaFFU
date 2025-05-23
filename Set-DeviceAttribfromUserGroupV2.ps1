@@ -163,7 +163,17 @@ catch {
     }
 }
 
-Write-Host "`nWe're all done ya'll! ` `nThe Intune Devices where primary users are in the Entra User Group '$sourceGroupName' should now have extensionAttribute1 set to '$ExtensionValue'."
-Write-Host "You can now create or update a Device Group Dynamic membership with the following rule syntax:"
-Write-Host "`n   (device.extensionAttribute1 -eq `"$ExtensionValue`")"
-Write-Host "`n" ` "`n" ` "Good-Luck!"
+
+Write-Host "`nCompleted Attribute Assignments" -ForegroundColor Green
+Write-Host "Entra Users in Group '" -ForegroundColor Cyan -NoNewline
+Write-Host $TargetGroupName -ForegroundColor Yellow -NoNewline
+Write-Host "' should now have extensionAttribute1 set to: " -ForegroundColor Cyan -NoNewline
+Write-Host $ExtensionValue -ForegroundColor Green
+Write-Host "`n"
+Write-Host "You can now create or update a Device Group Dynamic membership with the following rule syntax:" -ForegroundColor Cyan
+
+# Highlighting the rule and the variable within it
+Write-Host "`n   (device.extensionAttribute1 -eq " -ForegroundColor White -NoNewline
+Write-Host "$($ExtensionValue)`)" -ForegroundColor White -NoNewline
+Write-Host "`)" -ForegroundColor White 
+write-host "`n"

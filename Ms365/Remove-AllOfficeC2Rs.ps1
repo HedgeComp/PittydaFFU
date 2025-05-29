@@ -1,4 +1,27 @@
+<#
+.SYNOPSIS
+.Removes MS 365 via ODT by downloading the latest verions via Evergreen Link
+.DESCRIPTION
+.Downloads Latest ODT
+.Cofngiures XML install File
+.Runs Odt.exe against created xml
+
+.INPUTS
+.OUTPUTS
+.NOTES
+  Version:        1.1
+  Author:         Scott McDonnell
+  Twitter:        @Centit
+  Creation Date:  05/04/2025
+  Purpose/Change: Initial script development
+  Change: 05/29/25 - Added Comments.
+ #>
+
+
+
+
 ## Remove All Office Products XML Start ##
+## The XML below will Remove All Microsoft C2Rs ( Click-to-Runs), regardless of Product ID and Languages. To remove All Comment out or remove the XML block between Start and End above. Then Uncomment the XML below.
 
 $xml = @"
 <Configuration>

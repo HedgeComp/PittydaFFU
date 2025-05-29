@@ -2,43 +2,20 @@
 .SYNOPSIS
 .Installs MS 365 via ODT by downloading thge latest verions via Evergreen Link
 .DESCRIPTION
-.Removes AppX Packages
-.Disables Cortana
-.Removes McAfee
-.Removes HP Bloat
-.Removes Dell Bloat
-.Removes Lenovo Bloat
-.Windows 10 and Windows 11 Compatible
-.Removes any unwanted installed applications
-.Removes unwanted services and tasks
-.Removes Edge Surf Game
+.Downloads Latest ODT
+.Cofngiures XML install File
+.Runs Odt.exe against created xml
 
 .INPUTS
 .OUTPUTS
-C:\ProgramData\Debloat\Debloat.log
 .NOTES
-  Version:        5.1.22
+  Version:        1.1
   Author:         Scott McDonnell
   Twitter:        @Centit
-  Creation Date:  08/03/2022
+  Creation Date:  05/04/2025
   Purpose/Change: Initial script development
-  Change: 12/08/2022 - Added additional HP applications
-  Change 23/09/2022 - Added Clipchamp (new in W11 22H2)
-  Change 28/10/2022 - Fixed issue with Dell apps
-  Change 23/11/2022 - Added Teams Machine wide to exceptions
-  Change 27/11/2022 - Added Dell apps
-  Change 07/12/2022 - Whitelisted Dell Audio and Firmware
-  Change 19/12/2022 - Added Windows 11 start menu support
-  Change 20/12/2022 - Removed Gaming Menu from Settings
-  Change 18/01/2023 - Fixed Scheduled task error and cleared up $null posistioning
-  Change 22/01/2023 - Re-enabled Telemetry for Endpoint Analytics
-  Change 30/01/2023 - Added Microsoft Family to removal list
-  Change 31/01/2023 - Fixed Dell loop
-  Change 08/02/2023 - Fixed HP apps (thanks to http://gerryhampsoncm.blogspot.com/2023/02/remove-pre-installed-hp-software-during.html?m=1)
-  Change 08/02/2023 - Removed reg keys for Teams Chat
-  Change 14/02/2023 - Added HP Sure Apps#
-
-#>
+  Change: 05/29/25 - Added Comments.
+ #>
 
 
 # Begin Config XML creation. Setup your own settings by following the MS learn article here: https://learn.microsoft.com/en-us/microsoft-365-apps/deploy/office-deployment-tool-configuration-options

@@ -42,7 +42,7 @@ $odtPath        = Join-Path $tempFolder 'setup.exe'
 # Write XML to temp folder
 $xml | Out-File -FilePath $xmlPath -Encoding UTF8
 Write-Output "Downloading lastet ODT"
-# Download the Latest ODT into temp folder
+# Download the Latest ODT into temp folder. URI obtained from Stealthpuppy's Evergreen Project
 $odtUrl = 'https://officecdn.microsoft.com/pr/wsus/setup.exe'
 Invoke-WebRequest -Uri $odtUrl `
                   -OutFile $odtPath `

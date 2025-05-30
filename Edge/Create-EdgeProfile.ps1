@@ -1,3 +1,7 @@
+#credit for this script goes to Albert-Jan Scholt at cloudappoe.nl
+# add the option to set the icon of the profile by chaning 
+# avater_index value
+
 Param(
     [Parameter(Mandatory = $false)]
     [string]

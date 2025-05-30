@@ -2,6 +2,7 @@
 # found the option to set the icon of the profile by chaning 
 # avater_index value after much trial and error
 # may create icon index map in next version
+# set local username as the ProfileName for Edge Profile 
 
 Param(
     [Parameter(Mandatory = $false)]

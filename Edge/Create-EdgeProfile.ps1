@@ -13,9 +13,13 @@ Param(
     $createBackup = $true
 )
 
-$customerName = $env:USERNAME
-Write-Output "Creating Edge profile for $customerName"
+# Assign a current username value if $customerName is null or empty
+if ([string]::IsNullOrEmpty($customerName)) {
+    $customerName = $env:USERNAME
+    Write-Output "Customer name was null or empty, using default value: $customerName"
+}
 
+Write-Output "Creating Edge profile for $customerName"
 
 $profilePath = "profile-" + $customerName.replace(' ', '-')
 $proc = Start-Process -FilePath "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" -ArgumentList "--start-minimized --profile-directory=$profilePath --no-first-run --no-default-browser-check --flag-switches-begin --flag-switches-end --site-per-process" -PassThru  -WindowStyle Minimized

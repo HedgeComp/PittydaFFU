@@ -11,6 +11,10 @@ Add-AppxProvisionedPackage -Online -PackagePath $msix -SkipLicense
 # Registers App Installer so winget.exe becomes a “real” Win32 app available to every account
 Add-AppxPackage -Path $msix -Register -DisableDevelopmentMode -AllUsers
 
+$winget_exe = Resolve-Path "C:\Program Files\WindowsApps\Microsoft.DesktopAppInstaller_*_x64__8wekyb3d8bbwe\winget.exe"
+if ($winget_exe.count -gt 1){
+        $winget_exe = $winget_exe[-1].Path
+}
 
 
 

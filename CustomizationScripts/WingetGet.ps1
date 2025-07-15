@@ -1,3 +1,15 @@
+# 1. Download the script text
+$scriptText = Invoke-RestMethod https://aka.ms/install-powershell.ps1
+
+# 2. Build the full command with parameters
+$fullCommand = "& { $scriptText } -UseMSI"
+
+# 3. Invoke it
+Invoke-Expression $fullCommand
+
+
+
+
 $ProgressPreference = 'SilentlyContinue'
 $msix = "$env:TEMP\DesktopAppInstaller.msixbundle"
 Invoke-WebRequest `

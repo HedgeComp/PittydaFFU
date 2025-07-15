@@ -4,6 +4,10 @@ Invoke-WebRequest `
   -Uri 'https://github.com/microsoft/winget-cli/releases/download/v1.11.400/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle' `
   -OutFile $msix
 
+iex "& { $(Invoke-RestMethod https://aka.ms/install-powershell.ps1) } -UseMSI -Quiet -AddToPath"
+
+
+
 Add-AppxProvisionedPackage -Online -PackagePath $msix -SkipLicense
 
 & 'C:\Program Files\WindowsApps\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\winget.exe' --version

@@ -5,6 +5,17 @@ $JBNWinGetPath = Split-Path -Path $JBNWinGetPathExe -Parent
 set-location $JBNWinGetPath
 
 
+# 1. Query GitHub for the latest winget release and pick the .msixbundle URL
+$apiUrl = 'https://api.github.com/repos/microsoft/winget-cli/releases/latest'
+$msixUrl = (Invoke-RestMethod -Uri $apiUrl).assets.browser_download_url |
+          Where-Object { $_.EndsWith('.msixbundle') }
+
+# 2. Download the bundle to your working directory
+Invoke-WebRequest -Uri $msixUrl -OutFile '.\Microsoft.DesktopAppInstaller.msixbundle' -UseBasicParsing
+
+Add-AppxProvisionedPackage -Online -PackagePath '.\Microsoft.DesktopAppInstaller.msixbundle'
+
+
 # 1. Download the script text
 $scriptText = Invoke-RestMethod https://aka.ms/install-powershell.ps1
 

@@ -1,3 +1,28 @@
+ Write-Debug "Visual C++ Redistributable is not installed.`n`n"
+
+            # Define the URL and temporary file path for the download
+            $VCppRedistributable_Url = "https://aka.ms/vs/17/release/vc_redist.${arch}.exe"
+            $VCppRedistributable_Path = New-TemporaryFile2
+            Write-Output "Downloading Visual C++ Redistributable..."
+            Write-Debug "Downloading Visual C++ Redistributable from $VCppRedistributable_Url to $VCppRedistributable_Path`n`n"
+            Invoke-WebRequest -Uri $VCppRedistributable_Url -OutFile $VCppRedistributable_Path
+
+            # Rename file
+            $VCppRedistributableExe_Path = $VCppRedistributable_Path + ".exe"
+            Rename-Item -Path $VCppRedistributable_Path -NewName $VCppRedistributableExe_Path
+
+            # Install Visual C++ Redistributable
+            Write-Output "Installing Visual C++ Redistributable..."
+            Write-Debug "Installing Visual C++ Redistributable from $VCppRedistributableExe_Path`n`n"
+            Start-Process -FilePath $VCppRedistributableExe_Path -ArgumentList "/install", "/quiet", "/norestart" -Wait
+
+            Write-Debug "Removing temporary file..."
+            TryRemove $VCppRedistributableExe_Path
+
+
+
+
+
 $JBNWinGetResolve = Resolve-Path "C:\Program Files\WindowsApps\Microsoft.DesktopAppInstaller_*_x64__8wekyb3d8bbwe\winget.exe"
 $JBNWinGetPathExe = $JBNWinGetResolve[-1].Path
 

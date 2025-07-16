@@ -1,3 +1,10 @@
+$JBNWinGetResolve = Resolve-Path "C:\Program Files\WindowsApps\Microsoft.DesktopAppInstaller_*_x64__8wekyb3d8bbwe\winget.exe"
+$JBNWinGetPathExe = $JBNWinGetResolve[-1].Path
+
+$JBNWinGetPath = Split-Path -Path $JBNWinGetPathExe -Parent
+set-location $JBNWinGetPath
+
+
 # 1. Download the script text
 $scriptText = Invoke-RestMethod https://aka.ms/install-powershell.ps1
 

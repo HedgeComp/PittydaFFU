@@ -58,6 +58,7 @@ Write-Host "[HKLM] Disabling Edge Shortcut Creation (Policy & Explorer Key)" -Fo
 $regPath = "HKLM:\SOFTWARE\Policies\Microsoft\EdgeUpdate"
 CheckPath -keypath $regPath
 Set-ItemProperty -Path $regPath -Name "CreateDesktopShortcutDefault" -Value 0 -Type DWord -Force -ErrorAction SilentlyContinue
+Set-ItemProperty -Path $regPath -Name "RemoveDesktopShortcutDefault" -Value 1 -Type DWord -Force -ErrorAction SilentlyContinue
 # Method 2: Via Explorer Setting
 $regPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer"
 Set-ItemProperty -Path $regPath -Name "DisableEdgeDesktopShortcutCreation" -Value 1 -Type DWord -Force -ErrorAction SilentlyContinue

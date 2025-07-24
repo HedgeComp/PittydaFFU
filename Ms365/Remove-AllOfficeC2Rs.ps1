@@ -29,6 +29,7 @@ $xml = @"
   <Property Name="FORCEAPPSHUTDOWN" Value="True" />
   <Remove All="TRUE">
   </Remove>
+  <RemoveMSI />
 </Configuration>
 "@
 

@@ -18,6 +18,9 @@
  #>
 
 
+# Don't show progress bar for Add-AppxPackage - there's a weird issue where the progress stays on the screen after the apps are installed
+$OriginalProgressPreference = $ProgressPreference
+$ProgressPreference = 'SilentlyContinue'
 
 
 ## Remove All Office Products XML Start ##
@@ -57,4 +60,6 @@ $proc = Start-Process -FilePath $odtPath `
               -Wait `
               -PassThru
 $proc | Wait-Process          
+
+$ProgressPreference = $OriginalProgressPreference
 Write-Output "C2Rs Removed"

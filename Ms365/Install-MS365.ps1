@@ -15,12 +15,12 @@
   Creation Date:  05/04/2025
   Purpose/Change: Initial script development
   Change: 05/29/25 - Added Comments.
-  Change: 10/24/25 - Set Default Generic Company Name.
+  Change: 10/24/25 - Set Default Generic Company Name. Fix XML Comments
  #>
 
 
-# Begin Config XML creation. Setup your own settings by following the MS learn article here: https://learn.microsoft.com/en-us/microsoft-365-apps/deploy/office-deployment-tool-configuration-options
-# Or Youc can use the MS wizard here: https://config.office.com/deploymentsettings . Save your XMl File and copy the contents between the opening @" and closing "@
+## Begin Config XML creation. Setup your own settings by following the MS learn article here: https://learn.microsoft.com/en-us/microsoft-365-apps/deploy/office-deployment-tool-configuration-options
+## Or Youc can use the MS wizard here: https://config.office.com/deploymentsettings . Save your XMl File and copy the contents between the opening @" and closing "@
 
 $xml = @"
 <!-- START : Paste your Deployment XML Config below this line -->

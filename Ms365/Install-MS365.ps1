@@ -20,9 +20,10 @@
 
 
 # Begin Config XML creation. Setup your own settings by following the MS learn article here: https://learn.microsoft.com/en-us/microsoft-365-apps/deploy/office-deployment-tool-configuration-options
-# Or cheat abit and use the MS wizard here: https://config.office.com/deploymentsettings
+# Or Youc can use the MS wizard here: https://config.office.com/deploymentsettings . Save your XMl File and copy the contents between the opening @" and closing "@
 
 $xml = @"
+<!-- START : Paste your Deployment XML Config below this line -->
 <Configuration ID="fc78d2f9-59e9-4c0b-85e6-e75bfd6c5d79">
 <Info Description=""/>
 <Add OfficeClientEdition="64" Channel="Current" MigrateArch="TRUE">
@@ -52,6 +53,7 @@ $xml = @"
 </AppSettings>
 <Display Level="None" AcceptEULA="TRUE"/>
 </Configuration>
+<!-- END : Paste your Deployment XML Config above this line -->
 "@
 
 ## Install Office Products Config XML End ##

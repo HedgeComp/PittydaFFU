@@ -44,7 +44,7 @@ $xml = @"
 <Updates Enabled="TRUE"/>
 <RemoveMSI/>
 <AppSettings>
-<Setup Name="Company" Value="Blythwood Homes"/>
+<Setup Name="Company" Value="MyCompany Name Here"/>
 <User Key="software\microsoft\office\16.0\excel\options" Name="defaultformat" Value="51" Type="REG_DWORD" App="excel16" Id="L_SaveExcelfilesas"/>
 <User Key="software\microsoft\office\16.0\powerpoint\options" Name="defaultformat" Value="27" Type="REG_DWORD" App="ppt16" Id="L_SavePowerPointfilesas"/>
 <User Key="software\microsoft\office\16.0\word\options" Name="defaultformat" Value="" Type="REG_SZ" App="word16" Id="L_SaveWordfilesas"/>
